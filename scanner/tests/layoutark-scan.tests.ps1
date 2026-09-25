@@ -1,7 +1,8 @@
-$here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$scanner = Join-Path (Split-Path -Parent $here) 'layoutark-scan.ps1'
-
 Describe 'layoutark-scan' {
+    BeforeAll {
+        $scanner = Join-Path (Split-Path -Parent $PSScriptRoot) 'layoutark-scan.ps1'
+    }
+
     BeforeEach {
         $case = Join-Path $TestDrive 'estate'
         New-Item -ItemType Directory -Path (Join-Path $case 'Nested') -Force | Out-Null

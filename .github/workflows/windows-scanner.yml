@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Pester 5
         shell: powershell
-        run: Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force -SkipPublisherCheck
+        run: Install-Module Pester -RequiredVersion 5.7.1 -Scope CurrentUser -Force -SkipPublisherCheck
       - name: Parse scanner
         shell: powershell
         run: |
@@ -31,7 +31,7 @@ jobs:
           if ($errors) { throw ($errors | Out-String) }
       - name: Run scanner tests
         shell: powershell
-        run: Invoke-Pester scanner/tests -Output Detailed
+        run: Import-Module Pester -RequiredVersion 5.7.1; Invoke-Pester scanner/tests -Output Detailed
 
   powershell-7:
     runs-on: windows-latest
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Pester 5
         shell: pwsh
-        run: Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force -SkipPublisherCheck
+        run: Install-Module Pester -RequiredVersion 5.7.1 -Scope CurrentUser -Force -SkipPublisherCheck
       - name: Parse scanner
         shell: pwsh
         run: |
@@ -48,4 +48,4 @@ jobs:
           if ($errors) { throw ($errors | Out-String) }
       - name: Run scanner tests
         shell: pwsh
-        run: Invoke-Pester scanner/tests -Output Detailed
+        run: Import-Module Pester -RequiredVersion 5.7.1; Invoke-Pester scanner/tests -Output Detailed
