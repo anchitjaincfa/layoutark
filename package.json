@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
-    "test": "vitest run",
+    "test": "tsx tests/core/core.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -19,6 +19,6 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.0"
+    "tsx": "^4.20.0"
   }
 }
