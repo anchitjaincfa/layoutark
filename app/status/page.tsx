@@ -1,0 +1,1 @@
+import{featureStatus as s}from"@/src/core/feature-status";export default function P(){return <div className="page"><p className="eyebrow">Build ledger</p><h1>What works. What does not.</h1><div className="table section"><table><tbody>{Object.entries(s).map(([k,v])=><tr><td>{v.label}</td><td>{v.status}</td></tr>)}</tbody></table></div></div>}
