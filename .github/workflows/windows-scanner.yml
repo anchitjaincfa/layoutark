@@ -16,23 +16,36 @@ permissions:
   contents: read
 
 jobs:
-  pester:
+  windows-powershell:
     runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shell: [powershell, pwsh]
     steps:
       - uses: actions/checkout@v4
       - name: Install Pester 5
-        shell: ${{ matrix.shell }}
+        shell: powershell
         run: Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force -SkipPublisherCheck
       - name: Parse scanner
-        shell: ${{ matrix.shell }}
+        shell: powershell
         run: |
           $errors = $null
           [void][Management.Automation.Language.Parser]::ParseFile((Resolve-Path scanner/layoutark-scan.ps1), [ref]$null, [ref]$errors)
           if ($errors) { throw ($errors | Out-String) }
       - name: Run scanner tests
-        shell: ${{ matrix.shell }}
+        shell: powershell
+        run: Invoke-Pester scanner/tests -Output Detailed
+
+  powershell-7:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Pester 5
+        shell: pwsh
+        run: Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force -SkipPublisherCheck
+      - name: Parse scanner
+        shell: pwsh
+        run: |
+          $errors = $null
+          [void][Management.Automation.Language.Parser]::ParseFile((Resolve-Path scanner/layoutark-scan.ps1), [ref]$null, [ref]$errors)
+          if ($errors) { throw ($errors | Out-String) }
+      - name: Run scanner tests
+        shell: pwsh
         run: Invoke-Pester scanner/tests -Output Detailed
