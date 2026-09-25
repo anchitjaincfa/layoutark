@@ -11,5 +11,5 @@ assert.equal(validateManifest({...m,scan:{...m.scan,fileCount:3}}).ok,false);
 const r=analyzeManifest(m);assert.deepEqual(r.totals,{files:4,bytes:210,recent:1,cloudOnly:1,possibleDuplicates:2});
 assert.deepEqual(r.files.map(f=>f.lane),["convert-first","archive","convert-later","convert-later"]);
 assert.deepEqual(r.findings.map(f=>f.ruleId),["scan-incomplete","cloud-only","zero-byte","long-path","read-only","possible-duplicate"]);
-assert.equal(defendCsvFormula(" =SUM(A1:A2)"),"' =SUM(A1:A2)");assert.match(exportWorklistCsv(r),/'=Budget\\.pub/);
+assert.equal(defendCsvFormula(" =SUM(A1:A2)"),"' =SUM(A1:A2)");assert.match(exportWorklistCsv(r),/'=Budget\.pub/);
 console.log("core tests passed");
