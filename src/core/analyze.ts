@@ -2,7 +2,7 @@ import type {EstateReport,Lane,LayoutArkManifest,ManifestFile} from "./contracts
 export interface AnalysisOptions{recentDays?:number;archiveYears?:number;longPathThreshold?:number;sample?:boolean}
 const DAY=86400000;
 const age=(f:ManifestFile,ref:number)=>Math.max(0,Math.floor((ref-Date.parse(f.modifiedUtc))/DAY));
-const folder=(f:ManifestFile)=>{const p=f.relPath.replace(/\\/g,"/").replace(/^\/+|\/+$/g,"").split("/").filter(Boolean);return p.length>1?\`Root \${f.root}/\${p[0]}\`:\`Root \${f.root}\`};
+const folder=(f:ManifestFile)=>{const p=f.relPath.replace(/\\/g,"/").replace(/^\/+|\/+$/g,"").split("/").filter(Boolean);return p.length>1?"Root "+f.root+"/"+p[0]:"Root "+f.root};
 export function analyzeManifest(m:LayoutArkManifest,o:AnalysisOptions={}):EstateReport{
  const ref=Date.parse(m.generatedAt);if(!Number.isFinite(ref))throw Error("manifest.generatedAt must be a valid date-time");
  const recent=o.recentDays??365,years=o.archiveYears??5,archive=Math.round(years*365.2425),limit=o.longPathThreshold??240;
