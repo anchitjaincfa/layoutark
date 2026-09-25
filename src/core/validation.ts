@@ -2,7 +2,7 @@ import type {LayoutArkManifest} from "./contracts";
 export interface ManifestValidationIssue{path:string;code:string;message:string}
 export type ManifestValidationResult={ok:true;value:LayoutArkManifest;issues:[]}|{ok:false;issues:ManifestValidationIssue[]};
 const object=(v:unknown):v is Record<string,unknown>=>typeof v==="object"&&v!==null&&!Array.isArray(v);
-const iso=(v:unknown)=>typeof v==="string"&&Number.isFinite(Date.parse(v))&&/(?:Z|[+-]\\d\\d:\\d\\d)$/.test(v);
+const iso=(v:unknown)=>typeof v==="string"&&Number.isFinite(Date.parse(v))&&/(?:Z|[+-]\d\d:\d\d)$/.test(v);
 const uint=(v:unknown)=>typeof v==="number"&&Number.isSafeInteger(v)&&v>=0;
 export function validateManifest(v:unknown):ManifestValidationResult{
  const issues:ManifestValidationIssue[]=[],bad=(path:string,code:string,message:string)=>issues.push({path,code,message});
