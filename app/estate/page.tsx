@@ -1,0 +1,1 @@
+import{Estate}from"@/src/components/Estate";export default function P(){return <div className="page"><p className="eyebrow">Guide 02 / browser-local analysis</p><h1>Bring your manifest into view.</h1><p className="lede">Select scanner JSON. Nothing is uploaded.</p><Estate/></div>}
