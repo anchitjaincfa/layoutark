@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LayoutArk Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "generator",
+    "generatedAt",
+    "host",
+    "roots",
+    "scan",
+    "files"
+  ],
+  "properties": {
+    "schema": {
+      "const": "layoutark.manifest"
+    },
+    "version": {
+      "const": 1
+    },
+    "generator": {
+      "type": "object",
+      "required": [
+        "name",
+        "version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "layoutark-scan"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "host": {
+      "type": "object",
+      "required": [
+        "psEdition",
+        "psVersion",
+        "os",
+        "hostLabel",
+        "publisher"
+      ]
+    },
+    "roots": {
+      "type": "array",
+      "maxItems": 32
+    },
+    "scan": {
+      "type": "object",
+      "required": [
+        "startedAt",
+        "finishedAt",
+        "complete",
+        "fileCount",
+        "errors",
+        "redaction"
+      ]
+    },
+    "files": {
+      "type": "array",
+      "maxItems": 500000
+    }
+  }
+}
