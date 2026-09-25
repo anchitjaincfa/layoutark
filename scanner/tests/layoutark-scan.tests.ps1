@@ -4,7 +4,7 @@ Describe 'layoutark-scan' {
     }
 
     BeforeEach {
-        $case = Join-Path $TestDrive 'estate'
+        $case = Join-Path $TestDrive ('estate-' + [guid]::NewGuid().ToString('N'))
         New-Item -ItemType Directory -Path (Join-Path $case 'Nested') -Force | Out-Null
         [IO.File]::WriteAllText((Join-Path $case 'Alpha.pub'), 'content is never parsed')
         [IO.File]::WriteAllText((Join-Path $case 'Nested\BETA.PUB'), 'other bytes')
