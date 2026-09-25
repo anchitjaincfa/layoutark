@@ -1,0 +1,23 @@
+[
+  {
+    "id": "publisher-retirement",
+    "text": "Microsoft Publisher will no longer be supported after October 2026.",
+    "status": "verified",
+    "sourceUrl": "https://support.microsoft.com/en-us/publisher/microsoft-publisher-will-no-longer-be-supported-after-october-2026",
+    "verifiedOn": "2026-09-25"
+  },
+  {
+    "id": "keep-originals",
+    "text": "Keep original .pub files after creating replacement formats.",
+    "status": "scoped",
+    "sourceUrl": "https://support.microsoft.com/en-us/publisher/save-as-or-convert-a-publication-to-pdf-or-xps-using-publisher",
+    "verifiedOn": "2026-09-25"
+  },
+  {
+    "id": "local-analysis",
+    "text": "LayoutArk analyzes selected manifests in the browser and does not upload them.",
+    "status": "verified",
+    "sourceUrl": "/privacy",
+    "verifiedOn": "2026-09-25"
+  }
+]
