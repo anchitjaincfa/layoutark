@@ -1,0 +1,38 @@
+name: Windows scanner
+
+on:
+  push:
+    paths:
+      - 'scanner/**'
+      - '.github/workflows/windows-scanner.yml'
+      - 'schema/manifest.v1.schema.json'
+  pull_request:
+    paths:
+      - 'scanner/**'
+      - '.github/workflows/windows-scanner.yml'
+      - 'schema/manifest.v1.schema.json'
+
+permissions:
+  contents: read
+
+jobs:
+  pester:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shell: [powershell, pwsh]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Pester 5
+        shell: ${{ matrix.shell }}
+        run: Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force -SkipPublisherCheck
+      - name: Parse scanner
+        shell: ${{ matrix.shell }}
+        run: |
+          $errors = $null
+          [void][Management.Automation.Language.Parser]::ParseFile((Resolve-Path scanner/layoutark-scan.ps1), [ref]$null, [ref]$errors)
+          if ($errors) { throw ($errors | Out-String) }
+      - name: Run scanner tests
+        shell: ${{ matrix.shell }}
+        run: Invoke-Pester scanner/tests -Output Detailed
