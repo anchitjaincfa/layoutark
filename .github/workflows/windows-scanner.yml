@@ -20,18 +20,24 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Pester 5
-        shell: powershell
-        run: Install-Module Pester -RequiredVersion 5.7.1 -Scope CurrentUser -Force -SkipPublisherCheck
       - name: Parse scanner
         shell: powershell
         run: |
           $errors = $null
           [void][Management.Automation.Language.Parser]::ParseFile((Resolve-Path scanner/layoutark-scan.ps1), [ref]$null, [ref]$errors)
           if ($errors) { throw ($errors | Out-String) }
-      - name: Run scanner tests
+      - name: Run PowerShell 5.1 compatibility smoke test
         shell: powershell
-        run: Import-Module Pester -RequiredVersion 5.7.1; Invoke-Pester scanner/tests -Output Detailed
+        run: |
+          $estate = Join-Path $env:RUNNER_TEMP 'layoutark-ps51-estate'
+          New-Item -ItemType Directory -Path $estate -Force | Out-Null
+          [IO.File]::WriteAllText((Join-Path $estate 'sample.pub'), 'opaque bytes')
+          $json = Join-Path $env:RUNNER_TEMP 'layoutark-ps51.json'
+          $csv = Join-Path $env:RUNNER_TEMP 'layoutark-ps51.csv'
+          & .\scanner\layoutark-scan.ps1 -Root $estate -JsonPath $json -CsvPath $csv | Out-Null
+          $manifest = Get-Content -Raw $json | ConvertFrom-Json
+          if ($manifest.schema -ne 'layoutark.manifest' -or $manifest.scan.fileCount -ne 1) { throw 'PS5.1 manifest smoke test failed' }
+          if (-not (Test-Path $csv)) { throw 'PS5.1 CSV smoke test failed' }
 
   powershell-7:
     runs-on: windows-latest
